@@ -62,7 +62,7 @@ namespace ReconhecimentoEscudoTime
             mlContext.Model.Save(modeloTreinado, trainoDataView.Schema, caminhoModelo);
 
             string metricas = Metricas(mlContext, testeDataView, modeloTreinado);
-            txt.Text = txt.Text + "\nDados: " + metricas;
+            txt.Text = txt.Text + "; ***** Dados: " + metricas;
             txt.Text = txt.Text + (" 10 - Processo concluído;");
 
             progressBar.Value = 100;
