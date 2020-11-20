@@ -31,7 +31,7 @@ namespace ReconhecimentoEscudoTime
             IDataView iDataViewEmbaralhar = mlContext.Data.ShuffleRows(iDataViewImagens);
 
             progressBar.Value = 20;
-            txt.Text = txt.Text + (" 5 - Carregando imagens em memória, adicionando titúlo;");
+            txt.Text = txt.Text + (" 5 - Carregando imagens em memória, adicionando título;");
             IDataView iDataViewMemoria = mlContext.Transforms.Conversion.
                         MapValueToKey(outputColumnName: "LabelAsKey", inputColumnName: "Titulo", keyOrdinality: KeyOrdinality.ByValue)
                     .Append(mlContext.Transforms.LoadRawImageBytes(outputColumnName: "Imagem", imageFolder: caminhoEntrada, inputColumnName: "Caminho"))
@@ -57,13 +57,14 @@ namespace ReconhecimentoEscudoTime
             progressBar.Value = 90;
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
-            txt.Text = txt.Text + (" 8 - Treinamento Tempo: " + elapsedMs/1000 + " Segundos;");           
+            txt.Text = txt.Text + (" 8 - Treinamento Tempo: " + elapsedMs/1000 + " Segundos;");
             txt.Text = txt.Text + (" 9 - Salvando modelo;");
             mlContext.Model.Save(modeloTreinado, trainoDataView.Schema, caminhoModelo);
 
-            txt.Text = txt.Text + (" 10 - Processo concluído;");
             string metricas = Metricas(mlContext, testeDataView, modeloTreinado);
-            txt.Text = txt.Text + metricas;
+            txt.Text = txt.Text + "\nDados: " + metricas;
+            txt.Text = txt.Text + (" 10 - Processo concluído;");
+
             progressBar.Value = 100;
         }
 
